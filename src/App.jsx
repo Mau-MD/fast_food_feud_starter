@@ -2,6 +2,7 @@ import * as React from "react"
 // IMPORT ANY NEEDED COMPONENTS HERE
 import { createDataSet } from "./data/dataset"
 import "./App.css"
+import Header from "./components/Header/Header"
 
 // don't move this!
 export const appInfo = {
@@ -34,6 +35,7 @@ export function App() {
       {/* MAIN COLUMN */}
       <div className="container">
         {/* HEADER GOES HERE */}
+        <Header appInfo={appInfo}/>
 
         {/* RESTAURANTS ROW */}
         <div className="RestaurantsRow">
