@@ -32,11 +32,47 @@ export function App() {
   const [selectedMenuItem, setSelectedMenuItem] = React.useState("");
 
   const handleCategoryClick = (category) => {
+    setSelectedMenuItem("");
+    if (category === selectedCategory) {
+      setSelectedCategory("");
+      return;
+    }
     setSelectedCategory(category);
   };
 
   const handleRestaurantClick = (restaurant) => {
+    setSelectedMenuItem("");
+    if (restaurant === selectedRestaurant) {
+      setSelectedRestaurant("");
+      return;
+    }
     setSelectedRestaurant(restaurant);
+  };
+
+  const getCurrentInstruction = () => {
+    if (
+      selectedCategory !== "" &&
+      selectedRestaurant !== "" &&
+      selectedMenuItem
+    ) {
+      return appInfo.instructions.allSelected;
+    }
+    if (
+      selectedCategory !== "" &&
+      selectedRestaurant !== "" &&
+      !selectedMenuItem
+    ) {
+      return appInfo.instructions.noSelectedItem;
+    }
+    if (selectedCategory !== "" && selectedRestaurant === "") {
+      return appInfo.instructions.onlyCategory;
+    }
+    if (selectedCategory === "" && selectedRestaurant !== "") {
+      return appInfo.instructions.onlyRestaurant;
+    }
+    if (selectedCategory === "" && selectedRestaurant === "") {
+      return appInfo.instructions.start;
+    }
   };
 
   const currentMenuItems = data.filter(
@@ -87,19 +123,22 @@ export function App() {
         </div>
 
         {/* INSTRUCTIONS GO HERE */}
-        <Instructions instructions={appInfo.instructions.start} />
+        <Instructions instructions={getCurrentInstruction()} />
         {/* MENU DISPLAY */}
         <div className="MenuDisplay display">
           <div className="MenuItemButtons menu-items">
             <h2 className="title">Menu Items</h2>
             {/* YOUR CODE HERE */}
-            {currentMenuItems.map((item) => (
-              <Chip
-                key={item.item_name}
-                label={item.item_name}
-                onClick={() => setSelectedMenuItem(item)}
-              />
-            ))}
+            {selectedRestaurant &&
+              selectedCategory &&
+              currentMenuItems.map((item) => (
+                <Chip
+                  key={item.item_name}
+                  label={item.item_name}
+                  isActive={item.item_name === selectedMenuItem.item_name}
+                  onClick={() => setSelectedMenuItem(item)}
+                />
+              ))}
           </div>
 
           {/* NUTRITION FACTS */}
