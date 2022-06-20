@@ -3,7 +3,7 @@ import "./Chip.css"
 
 export function Chip({ label = "", isActive = false, onClick}) {
 
-  const buttonClassName = isActive ? "active" : "chip";
+  const buttonClassName = isActive ? "chip active" : "chip";
 
   return (
     <button className={buttonClassName} onClick={() => onClick()}>
